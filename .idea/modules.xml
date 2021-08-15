@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/fas.iml" filepath="$PROJECT_DIR$/fas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/archunit.iml" filepath="$PROJECT_DIR$/archunit.iml" />
     </modules>
   </component>
 </project>

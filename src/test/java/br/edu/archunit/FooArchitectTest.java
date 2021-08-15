@@ -1,4 +1,4 @@
-package br.edu.fas;
+package br.edu.archunit;
 
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
@@ -6,7 +6,7 @@ import com.tngtech.archunit.lang.ArchRule;
 
 import org.junit.Test;
 
-import br.edu.fas.persistence.Dao;
+import br.edu.archunit.persistence.Dao;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
@@ -15,10 +15,11 @@ import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 
 public class FooArchitectTest {
 
-    JavaClasses importedClasses = new ClassFileImporter().importPackages("br.edu.fas");
+    JavaClasses importedClasses = new ClassFileImporter()
+            .importPackages("br.edu.archunit");
 
     @Test
-    public void verificarDependenciasParaCamadaBusiness() {
+    public void verificarDependenciasParaCamadaNegocio() {
         ArchRule rule = classes()
                 .that().resideInAPackage("..service..")
                 .should().onlyHaveDependentClassesThat()
@@ -28,21 +29,11 @@ public class FooArchitectTest {
     }
 
     @Test
-    public void verificarDependenciasDaCamadaService() {
-        ArchRule rule = noClasses()
-                .that().resideInAPackage("..service..")
-                .should().dependOnClassesThat().resideInAnyPackage("..business..");
-
-        rule.check(importedClasses);
-    }
-
-
-    @Test
     public void verificarDependenciasParaCamadaPersistencia() {
         ArchRule rule = classes()
-        .that().resideInAPackage("..persistence..")
-        .should().onlyHaveDependentClassesThat()
-        .resideInAnyPackage("..persistence..", "..service..");
+                .that().resideInAPackage("..persistence..")
+                .should().onlyHaveDependentClassesThat()
+                .resideInAnyPackage("..persistence..", "..service..");
 
         rule.check(importedClasses);
     }
@@ -51,7 +42,18 @@ public class FooArchitectTest {
     public void verificarDependenciasDaCamadaPersistencia() {
         ArchRule rule = noClasses()
         .that().resideInAPackage("..persistence..")
-        .should().dependOnClassesThat().resideInAnyPackage("..service..");
+        .should().dependOnClassesThat()
+        .resideInAnyPackage("..service..");
+
+        rule.check(importedClasses);
+    }
+
+    @Test
+    public void verificarDependenciasDaCamadaService() {
+        ArchRule rule = noClasses()
+        .that().resideInAPackage("..service..")
+        .should().dependOnClassesThat()
+        .resideInAnyPackage("..business..");
 
         rule.check(importedClasses);
     }
@@ -77,7 +79,7 @@ public class FooArchitectTest {
     @Test
     public void verificarDependenciasCiclicas() {
         ArchRule rule = slices()
-        .matching("br.edu.fas.(*)..")
+        .matching("br.edu.archunit.(*)..")
         .should().beFreeOfCycles();
         rule.check(importedClasses);
     }
