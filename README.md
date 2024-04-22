@@ -1,9 +1,9 @@
 # archunit
 
-Validando regras de arquitetura utilizando a biblioteca de testes ArchUnit.
+Validating architectural rules using the ArchUnit testing library.  
 
-https://www.archunit.org/
+https://www.archunit.org/  
 
-Projeto passado no bootcamp de arquitetura de software da IGTI.
+Project announced at IGTI's software architecture bootcamp.  
 
-https://www.igti.com.br/bootcamp/arquiteto-software
+https://www.xpeducacao.com.br/bootcamp/arquiteto-software
